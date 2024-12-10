@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: drawhunt-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: drawhunt
+      TZ: Asia/Tokyo
+    command:
+      [
+        'mysqld',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_general_ci',
+        '--default-time-zone=+09:00',
+      ]
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./database:/var/lib/mysql
+    entrypoint: >
+      sh -c "mkdir -p ./database && exec docker-entrypoint.sh mysqld"
