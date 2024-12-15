@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class DrawhuntApplication
 
 fun main(args: Array<String>) {
-	runApplication<DrawhuntApplication>(*args)
+    runApplication<DrawhuntApplication>(*args)
 }
