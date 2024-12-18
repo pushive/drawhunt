@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    val id: Long? = null,
 
     @Column(name = "username", nullable = false, unique = true)
     var username: String,
@@ -24,11 +24,14 @@ data class User(
     @Column(name = "is_confirmed", nullable = false)
     var isConfirmed: Boolean = false,
 
+    @Column(name = "confirmation_token", nullable = false, unique = true)
+    var confirmationToken: String,
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    val createdAt: LocalDateTime,
+    val createdAt: LocalDateTime? = null,
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    var updatedAt: LocalDateTime,
+    var updatedAt: LocalDateTime? = null,
 )
