@@ -9,4 +9,5 @@ import java.util.*
 interface UserRepository : JpaRepository<User, Long> {
     fun findByUsername(username: String): Optional<User>
     fun findByEmailAddress(emailAddress: String): Optional<User>
+    fun findByConfirmationToken(token: String): Optional<User>
 }

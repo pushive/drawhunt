@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class TestController {
+class HelloController {
     @GetMapping("/")
     fun returnTestMessage(): String {
         return "Hello World! This is a test response from the server."
