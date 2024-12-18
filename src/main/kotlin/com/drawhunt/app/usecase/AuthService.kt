@@ -31,4 +31,8 @@ class AuthService(
         )
         return userRepository.save(newUser)
     }
+
+    private fun sendConfirmationEmail(emailAddress: String) {
+        
+    }
 }
