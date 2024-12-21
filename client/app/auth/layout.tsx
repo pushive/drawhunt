@@ -1,17 +1,11 @@
-import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-import './globals.css';
+import '../globals.css';
 
 const roboto = Roboto({
   subsets: ['latin'],
   weight: ['400', '700'],
   variable: '--font-roboto',
 });
-
-export const metadata: Metadata = {
-  title: 'Drawhunt',
-  description: 'Join the fun in drawing and guessing!',
-};
 
 export default function RootLayout({
   children,
@@ -20,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} antialiased`}>{children}</body>
+      <body className={`${roboto.variable} antialiased`}>
+        <div className="h-screen flex justify-center items-center">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
