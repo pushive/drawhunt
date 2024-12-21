@@ -32,8 +32,7 @@ class AuthService(
         userRepository.save(newUser)
         sendConfirmationEmail(userDTO.emailAddress)
     }
-
+    
     private fun sendConfirmationEmail(emailAddress: String) {
-
     }
 }

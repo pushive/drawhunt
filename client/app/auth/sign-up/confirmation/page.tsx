@@ -1,5 +1,3 @@
-import { AuthCard } from '../../components/AuthCard';
-
 const EmailConfirmation = () => {
   return (
     <div className="w-[600px] -mt-28 px-5 py-14 flex flex-col items-center gap-3 shadow-md">
@@ -13,5 +11,4 @@ const EmailConfirmation = () => {
     </div>
   );
 };
-
 export default EmailConfirmation;
