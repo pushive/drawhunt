@@ -18,7 +18,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log('OK');
   return (
     <html lang="en">
       <body className={`${roboto.variable} antialiased`}>{children}</body>

@@ -30,6 +30,7 @@ class AuthService(
             confirmationToken = confirmationToken
         )
         userRepository.save(newUser)
+        sendConfirmationEmail(userDTO.emailAddress)
     }
 
     private fun sendConfirmationEmail(emailAddress: String) {

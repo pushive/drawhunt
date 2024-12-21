@@ -1,8 +1,12 @@
+'use cliennt';
+
+import Link from 'next/link';
+import { AuthCard } from '../components/AuthCard';
+
 const LoginPage = () => {
   return (
-    <div className="flex justify-center">
-      <div className="w-[300px] mt-[100px] p-5 flex flex-col items-center gap-3 border">
-        <div className="text-xl font-semibold">Login</div>
+    <AuthCard title="Login">
+      <form className="w-full flex flex-col gap-3">
         <input
           type="text"
           placeholder="Username"
@@ -13,16 +17,19 @@ const LoginPage = () => {
           placeholder="Password"
           className="w-full border px-2 py-1"
         />
-        <input
-          type="email"
-          placeholder="E-mail"
-          className="w-full border px-2 py-1"
-        />
-        <button className="w-full bg-blue-500 text-white px-2 py-1">
+        <button
+          type="submit"
+          className="w-full mt-5 bg-blue-500 text-white px-2 py-1"
+        >
           Login
         </button>
+      </form>
+      <div className="w-full flex justify-end">
+        <Link href={'/auth/sign-up'}>
+          <div className="text-blue-500 hover:underline">Sign Up</div>
+        </Link>
       </div>
-    </div>
+    </AuthCard>
   );
 };
 

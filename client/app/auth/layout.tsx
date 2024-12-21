@@ -14,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} antialiased`}>{children}</body>
+      <body className={`${roboto.variable} antialiased`}>
+        <div className="h-screen flex justify-center items-center">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

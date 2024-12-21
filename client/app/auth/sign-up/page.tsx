@@ -1,51 +1,87 @@
 'use client';
-
-import { signup } from '@/app/api/auth';
-import React, { useState } from 'react';
+import Link from 'next/link';
+import React from 'react';
+import { AuthCard } from '../components/AuthCard';
+import { useFormik } from 'formik';
+import { signUpSchema } from '@/app/schemas';
+import { useRouter } from 'next/navigation';
 
 const SignUp = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const submit = () => {
-    if (username && password && email) {
-      signup(username, password, email);
-    }
-  };
+  const router = useRouter();
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+      email: '',
+    },
+    validationSchema: signUpSchema,
+    onSubmit: (values) => {
+      if (values.username && values.password && values.email) {
+        try {
+          // await signup(username, password, email);
+          router.push('/auth/sign-up/confirmation');
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
+  });
 
   return (
-    <div className="flex justify-center">
-      <div className="w-[300px] mt-[100px] p-5 flex flex-col items-center gap-3 border">
-        <div className="text-xl font-semibold">Sign up</div>
-        <input
-          type="text"
-          value={username}
-          placeholder="Username"
-          className="w-full border px-2 py-1"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="text"
-          value={password}
-          placeholder="Password"
-          className="w-full border px-2 py-1"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="email"
-          value={email}
-          placeholder="E-mail"
-          className="w-full border px-2 py-1"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <AuthCard title="Sign Up">
+      <form
+        className="w-full flex flex-col gap-3"
+        onSubmit={formik.handleSubmit}
+      >
+        <div>
+          <input
+            type="text"
+            placeholder="Username"
+            className="w-full border px-2 py-1"
+            {...formik.getFieldProps('username')}
+          />
+          {formik.errors.username && formik.touched.username && (
+            <div className="text-sm text-red-500">{formik.errors.username}</div>
+          )}
+        </div>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Password"
+            className="w-full border px-2 py-1"
+            {...formik.getFieldProps('password')}
+          />
+          {formik.errors.password && formik.touched.password && (
+            <div className="text-sm text-red-500">{formik.errors.password}</div>
+          )}
+        </div>
+
+        <div>
+          <input
+            type="email"
+            placeholder="E-mail"
+            className="w-full border px-2 py-1"
+            {...formik.getFieldProps('email')}
+          />
+          {formik.errors.email && formik.touched.email && (
+            <div className="text-sm text-red-500">{formik.errors.email}</div>
+          )}
+        </div>
+
         <button
-          className="w-full bg-blue-500 text-white px-2 py-1"
-          onClick={submit}
+          type="submit"
+          className="w-full mt-5 bg-blue-500 text-white px-2 py-1"
         >
           Sign Up
         </button>
+      </form>
+      <div className="w-full flex justify-end">
+        <Link href={'/auth/login'}>
+          <div className="text-blue-500 hover:underline">Login</div>
+        </Link>
       </div>
-    </div>
+    </AuthCard>
   );
 };
 export default SignUp;
