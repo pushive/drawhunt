@@ -11,17 +11,17 @@ import java.util.*
 @Service
 class AuthService(
     private val userRepository: UserRepository,
-    private val passowrdEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder
 ) {
     @Transactional
-    fun registerNewUser(userDTO: UserRegistrationDTO): User {
+    fun registerNewUser(userDTO: UserRegistrationDTO): Unit {
         if (userRepository.findByUsername(userDTO.username).isPresent) {
             throw IllegalArgumentException("The user name is already in use")
         }
         if (userRepository.findByEmailAddress(userDTO.emailAddress).isPresent) {
             throw IllegalArgumentException("The email address is already in use")
         }
-        val pwd = passowrdEncoder.encode(userDTO.password)
+        val pwd = passwordEncoder.encode(userDTO.password)
         val confirmationToken = UUID.randomUUID().toString()
         val newUser = User(
             username = userDTO.username,
@@ -29,10 +29,10 @@ class AuthService(
             emailAddress = userDTO.emailAddress,
             confirmationToken = confirmationToken
         )
-        return userRepository.save(newUser)
+        userRepository.save(newUser)
     }
 
     private fun sendConfirmationEmail(emailAddress: String) {
-        
+
     }
 }

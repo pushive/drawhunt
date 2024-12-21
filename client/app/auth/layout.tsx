@@ -1,6 +1,5 @@
-import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-import './globals.css';
+import '../globals.css';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -8,17 +7,11 @@ const roboto = Roboto({
   variable: '--font-roboto',
 });
 
-export const metadata: Metadata = {
-  title: 'Drawhunt',
-  description: 'Join the fun in drawing and guessing!',
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log('OK');
   return (
     <html lang="en">
       <body className={`${roboto.variable} antialiased`}>{children}</body>
