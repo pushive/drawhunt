@@ -44,7 +44,6 @@ const SignUp = () => {
             <div className="text-sm text-red-500">{formik.errors.username}</div>
           )}
         </div>
-
         <div>
           <input
             type="text"
@@ -56,7 +55,6 @@ const SignUp = () => {
             <div className="text-sm text-red-500">{formik.errors.password}</div>
           )}
         </div>
-
         <div>
           <input
             type="email"
@@ -68,7 +66,6 @@ const SignUp = () => {
             <div className="text-sm text-red-500">{formik.errors.email}</div>
           )}
         </div>
-
         <button
           type="submit"
           className="w-full mt-5 bg-blue-500 text-white px-2 py-1"
