@@ -5,7 +5,7 @@ export const signup = async (
   password: string,
   emailAddress: string
 ) => {
-  const respone = axios.post('http://localhost:8030/user/create', {
+  const respone = await axios.post('http://localhost:8030/user/create', {
     username,
     password,
     emailAddress,

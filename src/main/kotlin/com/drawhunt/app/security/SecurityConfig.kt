@@ -26,7 +26,7 @@ class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                     .anyRequest().authenticated()
             }
-            .httpBasic(Customizer.withDefaults())
+     
         return http.build()
     }
 
