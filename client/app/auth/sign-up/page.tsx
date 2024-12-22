@@ -5,6 +5,7 @@ import { AuthCard } from '../components/AuthCard';
 import { useFormik } from 'formik';
 import { signUpSchema } from '@/app/schemas';
 import { useRouter } from 'next/navigation';
+import { signup } from '@/app/api';
 
 const SignUp = () => {
   const router = useRouter();
@@ -15,10 +16,10 @@ const SignUp = () => {
       email: '',
     },
     validationSchema: signUpSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       if (values.username && values.password && values.email) {
         try {
-          // await signup(username, password, email);
+          await signup(values.username, values.password, values.email);
           router.push('/auth/sign-up/confirmation');
         } catch (error) {
           console.error(error);

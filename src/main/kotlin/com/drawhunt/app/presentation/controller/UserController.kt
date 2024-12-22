@@ -16,7 +16,9 @@ class UserController(
     private val authService: AuthService
 ) {
     @PostMapping("/create")
-    fun registerUser(@Valid @RequestBody userDTO: UserRegistrationDTO): ResponseEntity<Any> {
+    fun registerUser(
+        @Valid @RequestBody userDTO: UserRegistrationDTO
+    ): ResponseEntity<Any> {
         return try {
             authService.registerNewUser(userDTO)
             ResponseEntity.status(HttpStatus.CREATED).body(mapOf("message" to "User created successfully"))
