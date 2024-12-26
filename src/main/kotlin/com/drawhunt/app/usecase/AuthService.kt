@@ -18,12 +18,14 @@ class AuthService(
 ) {
     @Transactional
     fun registerNewUser(userDTO: UserRegistrationDTO): Unit {
-        if (userRepository.findByUsername(userDTO.username).isPresent) {
+        if (userRepository.findByUsername(userDTO.username) != null) {
             throw IllegalArgumentException("The user name is already in use")
         }
-        if (userRepository.findByEmailAddress(userDTO.emailAddress).isPresent) {
+
+        if (userRepository.findByEmailAddress(userDTO.emailAddress) != null) {
             throw IllegalArgumentException("The email address is already in use")
         }
+
         val pwd = passwordEncoder.encode(userDTO.password)
         val confirmationToken = UUID.randomUUID().toString()
         val newUser = User(
@@ -36,7 +38,20 @@ class AuthService(
         sendConfirmationEmail(userDTO.emailAddress, confirmationToken)
     }
 
-    private fun sendConfirmationEmail(emailAddress: String, confirmationToken: String) {
+    @Transactional
+    fun confirmNewUser(token: String): Unit {
+        val user = userRepository.findByConfirmationToken(token)
+            ?: throw IllegalArgumentException("Invalid token")
+
+        if (user.isConfirmed) {
+            throw IllegalArgumentException("This token has already been confirmed")
+        }
+
+        user.isConfirmed = true
+        userRepository.save(user)
+    }
+
+    private fun sendConfirmationEmail(emailAddress: String, confirmationToken: String): Unit {
         val message = SimpleMailMessage().apply {
             setTo(emailAddress)
             subject = "Confirmation Email"
