@@ -50,6 +50,8 @@ class UserController(
         return try {
             val jwt = authService.loginUser(userDTO)
             ResponseEntity.status(HttpStatus.OK).body(UserLoginResponseDTO(token = jwt))
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mapOf("error" to e.message))
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("error" to e.message))
         }

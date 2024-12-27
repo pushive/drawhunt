@@ -11,7 +11,7 @@ import java.util.*
 class JwtUtil(
     @Value("\${JWT_SECRET}") private val jwtSecret: String
 ) {
-    private val jwtExpirationMs: Long = 86400000
+    private val jwtExpirationMs: Long = 300000
     private val key: Key = Keys.hmacShaKeyFor(jwtSecret.toByteArray())
 
     fun generateToken(username: String): String {

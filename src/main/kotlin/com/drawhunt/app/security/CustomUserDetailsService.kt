@@ -19,6 +19,7 @@ class CustomUserDetailsService(
             .builder()
             .username(user.username)
             .password(user.password)
+            .authorities(if (user.isConfirmed) "CONFIRMED" else "NOT_CONFIRMED")
             .build()
     }
 }
