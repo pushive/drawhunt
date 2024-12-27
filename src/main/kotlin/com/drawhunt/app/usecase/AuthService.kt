@@ -51,6 +51,10 @@ class AuthService(
             UsernamePasswordAuthenticationToken(userDTO.username, userDTO.password)
         )
         val principal = authentication.principal as org.springframework.security.core.userdetails.User
+        if (principal.authorities.any { it.authority == "NOT_CONFIRMED" }) {
+            throw IllegalArgumentException("This user is not confirmed")
+        }
+        
         val jwt = jwtUtil.generateToken(principal.username)
         return jwt
     }
@@ -75,7 +79,7 @@ class AuthService(
             text = """
                 Thank you for registering.
                 Please click the link below to confirm your account:
-                http://localhost:8030/user/confirm?token=$confirmationToken
+                http://localhost:3000/auth/confirmation?token=$confirmationToken
             """.trimIndent()
         }
         mailSender.send(message)
