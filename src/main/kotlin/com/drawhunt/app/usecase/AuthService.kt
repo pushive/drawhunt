@@ -2,9 +2,13 @@ package com.drawhunt.app.usecase
 
 import com.drawhunt.app.domain.model.User
 import com.drawhunt.app.domain.repository.UserRepository
-import com.drawhunt.app.presentation.dto.UserRegistrationDTO
+import com.drawhunt.app.presentation.dto.auth.UserLoginRequestDTO
+import com.drawhunt.app.presentation.dto.auth.UserRegistrationDTO
+import com.drawhunt.app.security.JwtUtil
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,8 +18,11 @@ import java.util.*
 class AuthService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val mailSender: JavaMailSender
+    private val mailSender: JavaMailSender,
+    private val authenticationManager: AuthenticationManager,
+    private val jwtUtil: JwtUtil
 ) {
+
     @Transactional
     fun registerNewUser(userDTO: UserRegistrationDTO): Unit {
         if (userRepository.findByUsername(userDTO.username) != null) {
@@ -36,6 +43,16 @@ class AuthService(
         )
         userRepository.save(newUser)
         sendConfirmationEmail(userDTO.emailAddress, confirmationToken)
+    }
+
+    @Transactional
+    fun loginUser(userDTO: UserLoginRequestDTO): String {
+        val authentication = authenticationManager.authenticate(
+            UsernamePasswordAuthenticationToken(userDTO.username, userDTO.password)
+        )
+        val principal = authentication.principal as org.springframework.security.core.userdetails.User
+        val jwt = jwtUtil.generateToken(principal.username)
+        return jwt
     }
 
     @Transactional
