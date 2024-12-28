@@ -27,27 +27,25 @@ const ConfirmationPage = () => {
     } else {
       router.push('/auth/login');
     }
-  }, [token]);
+  }, [token, router]);
+
+  if (isLoading) {
+    <></>;
+  }
 
   return (
-    <>
-      {isLoading ? (
-        <></>
-      ) : (
-        <AuthCard title="Successfully Registered!">
-          <div>Please log in from the login page.</div>
-          <button
-            type="submit"
-            className="w-full mt-5 bg-green-500 text-white px-2 py-1"
-            onClick={() => {
-              router.push('/auth/login');
-            }}
-          >
-            Login Page
-          </button>
-        </AuthCard>
-      )}
-    </>
+    <AuthCard title="Successfully Registered!">
+      <div>Please log in from the login page.</div>
+      <button
+        type="submit"
+        className="w-full mt-5 bg-green-500 text-white px-2 py-1"
+        onClick={() => {
+          router.push('/auth/login');
+        }}
+      >
+        Login Page
+      </button>
+    </AuthCard>
   );
 };
 
